@@ -1,17 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather app</title>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <nav>
-            <h1>Yo</h1>
-        </nav>
+      <div class="topnav">
+        <a class="active">Weather app</a>
+        <input type="text" placeholder="Search.." />
+      </div>
+      <div class="curent-weather">
+        <div class="main-left-container">
+          <h1 class="weather">Weather</h1>
+          <p class="location">Location</p>
+          <p class="date">Date</p>
+          <p class="temperature">Temperature</p>
+        </div>
+        <div class="main-right-container">
+           <p>Feels like</p>
+           <p>Humidity</p> 
+           <p>Wind speed</p> 
+           <p>Chance of rain</p>  
+        </div>
+      </div>
     </header>
     <script src="main.js"></script>
-</body>
+  </body>
 </html>
