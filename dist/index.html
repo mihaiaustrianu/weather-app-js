@@ -1,17 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather app</title>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <nav>
-            <h1>Yo</h1>
-        </nav>
+      <div class="topnav">
+        <a class="active">Weather app</a>
+        <input class="search-field" id="search" type="text" placeholder="City..." />
+        <button class="search-btn" id="myBtn">Search</button>
+      </div>
     </header>
+    <div class="main-container">
+      <div class="curent-weather">
+        <div class="main-left-container">
+          <h1 class="weather">Weather</h1>
+          <p class="location">Location</p>
+          <p class="date">Date</p>
+          <p class="temperature">Temperature</p>
+        </div>
+        <div class="main-right-container">
+          <p>Feels like</p>
+          <p class="feels-like"></p>
+          <p>Humidity</p>
+          <p class="humidity"></p>
+          <p>Wind speed</p>
+          <p class="wind-speed"></p>
+        </div>
+      </div>
+      <div class="weekly-weather"></div>
+    </div>
+    <footer>
+        <p>Copyright @ Mihai Austrianu</p>
+    </footer>
     <script src="main.js"></script>
-</body>
+  </body>
 </html>
