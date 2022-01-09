@@ -112,12 +112,12 @@ const DOMManipulation = (() => {
     city = val;
   }
   function clickHandler() {
-    const field =document.querySelector(".search-field")
-    field.innerHTML = ''
+    const field = document.querySelector(".search-field")
     const val = field.value;
     setCity(val);
     populateCurrentDay();
     populateWeeklyData();
+    field.value = ''
   }
   return {
     populateCurrentDay,
