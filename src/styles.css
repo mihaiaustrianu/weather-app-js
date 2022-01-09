@@ -28,9 +28,22 @@
     margin-right: 16px;
     font-size: 17px;
   }
-  
+
+  .curent-weather{
+      display: flex;
+      justify-content: space-between;
+      margin-left: 3rem;
+      margin-right: 3rem;
+      margin-top: 3rem;
+  }
+  .weekly-weather{
+    display: flex;
+    margin-left: 3rem;
+    margin-right: 3rem;
+    justify-content: space-between;
+  }
   @media screen and (max-width: 600px) {
-    .topnav a, .topnav input[type=text] {
+    .topnav a, .topnav input[type=text], .weekly-weather {
       float: none;
       display: block;
       text-align: center;
@@ -41,12 +54,4 @@
     .topnav input[type=text] {
       border: 1px solid #ccc;
     }
-  }
-
-  .curent-weather{
-      display: flex;
-      justify-content: space-between;
-      margin-left: 3rem;
-      margin-right: 3rem;
-      margin-top: 3rem;
   }
