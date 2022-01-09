@@ -3,7 +3,7 @@ import "./styles.css";
 async function getWeatherData(city, units, API_KEY) {
   try {
     const response = await fetch(
-      `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=${units}`
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=${units}`
     );
     const weatherData = await response.json();
     return weatherData;
