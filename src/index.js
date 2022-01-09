@@ -1,7 +1,5 @@
 import "./styles.css";
 
-const API_KEY = "933086bfe71245140d90698686b2b06b";
-
 async function getWeatherData(city, units, API_KEY) {
   try {
     const response = await fetch(
@@ -28,10 +26,11 @@ async function getWeatherDataWeek(lat, lon, units, API_KEY) {
 
 const DOMManipulation = (() => {
   //Initial state - Bucharest
+  const API_KEY = "933086bfe71245140d90698686b2b06b";
   let city = "bucharest";
   let units = "metric";
 
-  async function populateCurrentDay(API_KEY) {
+  async function populateCurrentDay() {
     let weatherData = await getWeatherData(city, units, API_KEY);
 
     console.log(weatherData);
@@ -41,24 +40,28 @@ const DOMManipulation = (() => {
     let temperature = document.querySelector(".temperature");
     weather.innerHTML = weatherData.weather[0].main;
     location.innerHTML = weatherData.name;
-    temperature.innerHTML = weatherData.main.temp + "°" + "C";
+    temperature.innerHTML = Math.round(weatherData.main.temp) + "°" + "C";
 
     //get current time
     let dateTime = new Date(weatherData.dt * 1000);
     let date = document.querySelector(".date");
-    date.innerHTML = dateTime.toLocaleString();
+    date.innerHTML = dateTime.toLocaleString("en-US", {
+      weekday: "long",
+      month: "short",
+      day: "numeric",
+    });
 
     //populate right side
     let feelsLike = document.querySelector(".feels-like");
     let humidity = document.querySelector(".humidity");
     let windSpeed = document.querySelector(".wind-speed");
 
-    feelsLike.innerHTML = weatherData.main.feels_like + "°" + "C";
-    humidity.innerHTML = weatherData.main.humidity;
-    windSpeed.innerHTML = weatherData.wind.speed;
+    feelsLike.innerHTML = Math.round(weatherData.main.feels_like) + "°" + "C";
+    humidity.innerHTML = weatherData.main.humidity + " %";
+    windSpeed.innerHTML = Math.round(weatherData.wind.speed) + " km/h";
   }
 
-  async function populateWeeklyData(API_KEY) {
+  async function populateWeeklyData() {
     let weatherData = await getWeatherData(city, units, API_KEY);
 
     //lat and lon
@@ -66,10 +69,9 @@ const DOMManipulation = (() => {
     let lon = weatherData.coord.lon;
 
     let weatherDataWeek = await getWeatherDataWeek(lat, lon, units, API_KEY);
-    console.log(weatherDataWeek);
 
     let weeklyWeather = document.querySelector(".weekly-weather");
-    console.log(weatherDataWeek.daily[3].sunrise)
+    weeklyWeather.innerHTML = "";
     for (let i = 0; i < 7; i++) {
       let dayElement = helperFunctions.createElement("div", "day-div", "");
       let dayOfWeek = helperFunctions.createElement(
@@ -83,12 +85,12 @@ const DOMManipulation = (() => {
       let minElement = helperFunctions.createElement(
         "div",
         "min-temp",
-        +weatherDataWeek.daily[i].temp.min
+        Math.round(parseInt(weatherDataWeek.daily[i].temp.min)) + "°" + "C"
       );
       let maxElement = helperFunctions.createElement(
         "div",
         "max-temp",
-        weatherDataWeek.daily[i].temp.max
+        Math.round(parseInt(weatherDataWeek.daily[i].temp.max)) + "°" + "C"
       );
 
       tempElement.appendChild(maxElement);
@@ -100,13 +102,34 @@ const DOMManipulation = (() => {
       weeklyWeather.appendChild(dayElement);
     }
   }
-
-  return { populateCurrentDay, populateWeeklyData };
+  function populateSearchHandler(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      document.getElementById("myBtn").click();
+    }
+  }
+  function setCity(val) {
+    city = val;
+  }
+  function clickHandler() {
+    const field =document.querySelector(".search-field")
+    field.innerHTML = ''
+    const val = field.value;
+    setCity(val);
+    populateCurrentDay();
+    populateWeeklyData();
+  }
+  return {
+    populateCurrentDay,
+    populateWeeklyData,
+    populateSearchHandler,
+    clickHandler,
+  };
 })();
 
 const helperFunctions = (() => {
   function getDayName(dateStr, locale) {
-    var date = new Date(dateStr*1000);
+    var date = new Date(dateStr * 1000);
     return date.toLocaleDateString(locale, { weekday: "short" });
   }
   function createElement(type, className, html) {
@@ -118,6 +141,12 @@ const helperFunctions = (() => {
   return { getDayName, createElement };
 })();
 
-DOMManipulation.populateCurrentDay(API_KEY);
-DOMManipulation.populateWeeklyData(API_KEY);
+DOMManipulation.populateCurrentDay();
+DOMManipulation.populateWeeklyData();
 //getWeatherDataWeek('bucharest','metric')
+
+var input = document.getElementById("search");
+input.addEventListener("keyup", DOMManipulation.populateSearchHandler);
+document
+  .getElementById("myBtn")
+  .addEventListener("click", DOMManipulation.clickHandler);
